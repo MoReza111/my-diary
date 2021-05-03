@@ -11,7 +11,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-validator": "^6.10.1",
-    "mongoose": "^5.12.7"
+    "mongoose": "^5.12.7",
+    "slugify": "^1.5.1"
   },
   "devDependencies": {
     "concurrently": "^6.0.2",
