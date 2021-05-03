@@ -16,6 +16,23 @@ exports.getAllDiaries = async(req,res,next)=>{
     }
 }
 
+exports.getDiary = async(req,res,next)=>{
+    try{
+        const { id } = req.params
+
+        const diay = await Diary.findById(id)
+
+        res.status(200).json({
+            status:'Sucess',
+            data:{
+                diary
+            }
+        })
+    }catch(err){
+        return next(new Error('Something Went Wrong!'))
+    }
+}
+
 exports.createDiary = async(req,res,next)=>{
     try{
         const errors = validationResult(req)
@@ -46,7 +63,7 @@ exports.checkKey = async(req,res,next)=>{
         const { key } = req.body
 
         const keys = await Diary.find({ _id:id , key})
-        
+
         if(keys.length == 0){
             req.access = false
             return res.status(403).json({
