@@ -21,12 +21,13 @@ diarySchema.pre('save',async function(next){
     this.slug = this.topic.split(' ').join('-')
     
 
-    const docBySlug = await Diary.find({$or: [{slug:this.slug}, {slug:`/${this.slug}/`}]})
+    const docBySlug = await Diary.find({$or: [{slug:this.slug}, {slug:{$regex : `.*${this.slug}.*`}}]})
     if(docBySlug.length != 0){
-        this.slug = `${this.slug}-${docBySlug.length}`
+        this.slug = `${this.slug}-${docBySlug.length +1}`
     }
 
     this.createdAt = new Date()
+    this.key = [...Array(6)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')
 
     next()
 })
