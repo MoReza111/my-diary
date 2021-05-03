@@ -39,3 +39,23 @@ exports.createDiary = async(req,res,next)=>{
         return next(new Error('Something Went Wrong!'))
     }
 }
+
+exports.checkKey = async(req,res,next)=>{
+    try{
+        const {id} = req.params
+        
+        const keys = await Diary.find({ _id:id , key})
+
+        if(!keys){
+            req.access = false
+            return res.status(403).json({
+                staus:'fail',
+                messag:"شما نیمتوانید این فرایند را انجام دهید!"
+            })
+        }
+
+        req.access = true
+    }catch(err){
+        return next(new Error('Something Went Wrong!'))
+    }
+}
