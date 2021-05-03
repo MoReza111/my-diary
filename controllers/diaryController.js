@@ -67,7 +67,7 @@ exports.updateDiary = async(req,res,next)=>{
                 message:'شما نمیتوانید این فرایند را انجام دهید!'
             })
         }
-        
+
         const updatedDiary = await Diary.findByIdAndUpdate(id,{
             topic: req.body.topic,
             content: req.body.content
@@ -87,6 +87,34 @@ exports.updateDiary = async(req,res,next)=>{
                 diary : updatedDiary
             }
         })
+    }catch(err){
+        console.log(err)
+        return next(new Error('Something Went Wrong!'))
+    }
+}
+
+exports.deleteDiary = async(req,res,next)=>{
+    try{
+        const { id } = req.params
+        
+        if(!req.access){
+            return res.status(403).json({
+                status:'fail',
+                message:'شما نمیتوانید این فرایند را انجام دهید!'
+            })
+        }
+
+        const updatedDiary = await Diary.findByIdAndRemove(id)
+
+        if(!updatedDiary){
+            return res.status(404).json({
+                status:'fail',
+                message:'هیچ خاطره ای با این مشخصات پیدا نشد!'
+            })
+        }
+
+
+        res.status(204).json({})
     }catch(err){
         console.log(err)
         return next(new Error('Something Went Wrong!'))
