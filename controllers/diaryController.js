@@ -20,7 +20,7 @@ exports.getDiary = async(req,res,next)=>{
     try{
         const { id } = req.params
 
-        const diay = await Diary.findById(id)
+        const diary = await Diary.findById(id)
 
         res.status(200).json({
             status:'Sucess',
@@ -57,26 +57,56 @@ exports.createDiary = async(req,res,next)=>{
     }
 }
 
+exports.updateDiary = async(req,res,next)=>{
+    try{
+        const { id } = req.params
+        
+        if(!req.access){
+            return res.status(403).json({
+                status:'fail',
+                message:'شما نمیتوانید این فرایند را انجام دهید!'
+            })
+        }
+        
+        const updatedDiary = await Diary.findByIdAndUpdate(id,{
+            topic: req.body.topic,
+            content: req.body.content
+        })
+
+        if(!updatedDiary){
+            return res.status(404).json({
+                status:'fail',
+                message:'هیچ خاطره ای با این مشخصات پیدا نشد!'
+            })
+        }
+
+
+        res.status(200).json({
+            status:'success',
+            data:{
+                diary : updatedDiary
+            }
+        })
+    }catch(err){
+        console.log(err)
+        return next(new Error('Something Went Wrong!'))
+    }
+}
+
 exports.checkKey = async(req,res,next)=>{
     try{
         const { id } = req.params
         const { key } = req.body
 
-        const keys = await Diary.find({ _id:id , key})
+        const keys = await Diary.findOne({ _id:id , key})
 
-        if(keys.length == 0){
-            req.access = false
-            return res.status(403).json({
-                staus:'fail',
-                messag:"شما نیمتوانید این فرایند را انجام دهید!"
-            })
+        if(!keys){
+            req.user = false
+            return next()
         }
 
         req.access = true
-
-        res.status(200).json({
-            status:'success'
-        })
+        next()
     }catch(err){
         return next(new Error('Something Went Wrong!'))
     }

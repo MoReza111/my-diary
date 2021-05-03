@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const {body} = require('express-validator')
 
-const { getAllDiaries, createDiary, checkKey , getDiary } = require('./../controllers/diaryController')
+const { getAllDiaries, createDiary, checkKey, getDiary, updateDiary } = require('./../controllers/diaryController')
 
 const router = Router()
 
@@ -11,6 +11,6 @@ router.route('/').get(getAllDiaries).post([
     body('content').not().isEmpty().withMessage('لطفا متن خاطره را نیز وارد کنید!'),
 ], createDiary)
 
-router.route('/:id').post(checkKey).get(getDiary)
+router.route('/:id').get(getDiary).put(checkKey,updateDiary)
 
 module.exports = router
