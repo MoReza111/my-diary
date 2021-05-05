@@ -71,7 +71,7 @@ exports.updateDiary = async(req,res,next)=>{
         const updatedDiary = await Diary.findByIdAndUpdate(id,{
             topic: req.body.topic,
             content: req.body.content
-        })
+        },{new:true})
 
         if(!updatedDiary){
             return res.status(404).json({
