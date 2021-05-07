@@ -4,7 +4,7 @@
 
 ```sh
 $ npm install
-$ cd client
+$ cd my-diary-front
 $ npm install
 ```
 ### To run both client and server together run this command on root directory: 

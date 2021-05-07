@@ -1,0 +1,4 @@
+[submodule "my-diary-front"]
+	path = my-diary-front
+	url = https://github.com/MoReza111/my-diary-front
+	branch = master
