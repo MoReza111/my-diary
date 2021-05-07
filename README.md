@@ -7,11 +7,9 @@ $ npm install
 $ cd client
 $ npm install
 ```
-
+### To run both client and server together run this command on root directory: 
 ```sh
-$ npm install
-$ cd client
-$ npm install
+$ npm run dev
 ```
 
 # Visit http://localhost:3000
