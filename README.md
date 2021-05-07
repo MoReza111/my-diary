@@ -1,5 +1,10 @@
 # A Diary App using node.js mongodb and React
 
+### To clone this repo :
+```sh
+$ git clone --recursive [URL to Git repo]
+```
+
 ### Usage
 
 ```sh
